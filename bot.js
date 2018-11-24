@@ -4,6 +4,13 @@ const tokens = require('./tokens.json');
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  
+  let guilds = client.guilds;
+  
+  guilds.forEach(function(element) {
+	  element.leave();
+  });
+  
   client.channels.get("515687586732441610").send({
     embed: {
       color: 0xb1ff9e,
@@ -17,6 +24,20 @@ client.on('ready', () => {
       }
     }
   });
+});
+
+client.on('presenceUpdate', (oldMember, newMember) => {
+        if (newMember.presence.game === null) return;
+        var streaming = newMember.presence.game.streaming;
+        if (streaming === null) return;
+        if (streaming) {
+            newMember.addRole(row.streamingRole);
+        } else {
+            var checkStreamingRole = newMember.roles.find('id', row.streamingRole);
+            if (checkStreamingRole != null) {
+                newMember.removeRole(row.streamingRole);
+            }
+        }
 });
 
 client.on('guildMemberAdd', (member) => {
