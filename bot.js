@@ -33,7 +33,7 @@ client.on('presenceUpdate', (oldMember, newMember) => {
         var streaming = newMember.presence.game.streaming;
         if (streaming === null) return;
         if (streaming) {
-            oldMember.guild.channels.get("514315299584081931").send(`${newMember.user.username} is now streaming at ${newMember.presence.game.url}!`);
+            oldMember.guild.channels.get("513256961656225792").send(`${newMember.user.username} is now streaming at ${newMember.presence.game.url}!`);
         }
 });
 
