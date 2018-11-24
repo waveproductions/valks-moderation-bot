@@ -31,12 +31,7 @@ client.on('presenceUpdate', (oldMember, newMember) => {
         var streaming = newMember.presence.game.streaming;
         if (streaming === null) return;
         if (streaming) {
-            newMember.addRole(row.streamingRole);
-        } else {
-            var checkStreamingRole = newMember.roles.find('id', row.streamingRole);
-            if (checkStreamingRole != null) {
-                newMember.removeRole(row.streamingRole);
-            }
+            oldMember.guild.channels.get("514315299584081931").send(`${newMember.user.username} is now streaming at ${newMember.presence.game.url}!`);
         }
 });
 
