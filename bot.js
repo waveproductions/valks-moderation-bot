@@ -4,7 +4,7 @@ const tokens = require('./tokens.json');
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  msg.guild.channels.get("515687586732441610").send({
+  client.channels.get("515687586732441610").send({
     embed: {
       color: 0xb1ff9e,
       author: {
