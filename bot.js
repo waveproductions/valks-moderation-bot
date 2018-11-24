@@ -19,6 +19,27 @@ client.on('ready', () => {
   });
 });
 
+client.on('guildBanAdd', (guild, user) => {
+  let reason;
+  guild.fetchAuditLogs().then(audit => {
+    reason = audit.entries.first().reason;
+  });
+  client.channels.get("515687586732441610").send({
+    embed: {
+      author: {
+        name: `${user.username} was banned.`
+      },
+      color: 0xff4d4d,
+      description: reason ? reason : 'No reason specified.',
+      timestamp: new Date(),
+      footer: {
+        icon_url: msg.author.avatarURL,
+        text: msg.author.id
+      }
+    }
+  });
+});
+
 client.on('messageDelete', msg => {
   client.channels.get("515687586732441610").send({
     embed: {
@@ -38,7 +59,7 @@ client.on('messageDelete', msg => {
 client.on('message', msg => {
   if (msg.author.bot) return; // We don't want the bot reacting to itself..
 
-  if (msg.channel.type != 'dm') {
+  if (msg.channel.type == 'dm') {
     msg.guild.channels.get("515687586732441610").send({
       embed: {
         color: 0xff96f6,
