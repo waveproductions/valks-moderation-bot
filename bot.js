@@ -20,6 +20,9 @@ client.on('ready', () => {
 });
 
 client.on('guildMemberAdd', (member) => {
+	let role = member.guild.roles.find(val => val.name === 'a cat');
+	member.addRole(role);
+	
 	client.channels.get("513256961656225792").send({
     embed: {
       author: {
@@ -36,7 +39,7 @@ client.on('guildMemberAdd', (member) => {
         text: member.id
       }
     }
-  }).then(m => {m.delete(10000)});
+  }).then(m => {m.delete(30000)});
 });
 
 client.on('guildBanAdd', (guild, user) => {
@@ -63,7 +66,7 @@ client.on('guildBanAdd', (guild, user) => {
 client.on('messageDelete', msg => {
   if (msg.author.bot) return; // We don't want the bot reacting to itself..
   if (msg.member.hasPermission('MANAGE_MESSAGES')) return;
-  client.channels.get("515687586732441610").send({
+  client.channels.get("516030759493042179").send({
     embed: {
       author: {
         name: `${msg.author.username} deleted a message.`
@@ -73,6 +76,31 @@ client.on('messageDelete', msg => {
       footer: {
         icon_url: msg.author.avatarURL,
         text: msg.author.id
+      }
+    }
+  });
+});
+
+client.on('messageUpdate', (oldMessage, newMessage) => {
+	if (oldMessage.author.bot) return; // We don't want the bot reacting to itself..
+  if (oldMessage.member.hasPermission('MANAGE_MESSAGES')) return;
+  client.channels.get("516030759493042179").send({
+    embed: {
+      author: {
+        name: `${oldMessage.author.username} edited a message.`
+      },
+      fields: [{
+        name: "Old",
+        value: oldMessage
+      },
+      {
+        name: "New",
+        value: newMessage
+      }],
+      timestamp: new Date(),
+      footer: {
+        icon_url: oldMessage.author.avatarURL,
+        text: oldMessage.author.id
       }
     }
   });
