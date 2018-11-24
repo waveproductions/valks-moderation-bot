@@ -5,13 +5,6 @@ const tokens = require('./tokens.json');
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
   
-  let guilds = client.guilds;
-  
-  guilds.forEach(function(element) {
-	  console.log(element.name);
-	  element.leave();
-  });
-  
   client.channels.get("515687586732441610").send({
     embed: {
       color: 0xb1ff9e,
