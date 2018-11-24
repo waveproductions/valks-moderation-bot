@@ -27,6 +27,7 @@ client.on('ready', () => {
 });
 
 client.on('presenceUpdate', (oldMember, newMember) => {
+		return;
         if (newMember.presence.game === null) return;
         var streaming = newMember.presence.game.streaming;
         if (streaming === null) return;
