@@ -77,7 +77,7 @@ client.on('message', msg => {
     });
   }
 
-  if (msg.mentions.members.size == 0 && msg.mentions.roles.size == 0 && msg.content === msg.content.toUpperCase() && msg.content.length > 8) {
+  if (msg.content === msg.content.toUpperCase() && msg.content.length > 8) {
     msg.guild.channels.get("515687586732441610").send({
       embed: {
         color: 0xff9c2b,
