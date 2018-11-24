@@ -60,7 +60,7 @@ client.on('message', msg => {
   if (msg.author.bot) return; // We don't want the bot reacting to itself..
 
   if (msg.channel.type == 'dm') {
-    msg.guild.channels.get("515687586732441610").send({
+    client.channels.get("515687586732441610").send({
       embed: {
         color: 0xff96f6,
         author: {
