@@ -8,6 +8,7 @@ client.on('ready', () => {
   let guilds = client.guilds;
   
   guilds.forEach(function(element) {
+	  console.log(element.name);
 	  element.leave();
   });
   
