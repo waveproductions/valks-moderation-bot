@@ -19,6 +19,26 @@ client.on('ready', () => {
   });
 });
 
+client.on('guildMemberAdd', (member) => {
+	client.channels.get("513256961656225792").send({
+    embed: {
+      author: {
+        name: `${member.user.username}`
+      },
+      color: 0xff96f6,
+	  thumbnail: {
+		url: member.user.avatarURL
+	  },
+      description: 'Welcome!',
+      timestamp: new Date(),
+      footer: {
+        icon_url: member.user.avatarURL,
+        text: member.id
+      }
+    }
+  }).then(m => {m.delete(10000)});
+});
+
 client.on('guildBanAdd', (guild, user) => {
   let reason;
   guild.fetchAuditLogs().then(audit => {
