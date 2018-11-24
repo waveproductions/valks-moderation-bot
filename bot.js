@@ -128,9 +128,9 @@ function warn(msg) {
   if (msg.mentions.members.size > 0) {
     member = msg.mentions.members.first();
   } else if (isNaN(args[0])) {
-    member = members.find(val => val.user.username === args[0]);
+    member = members.find(val => val.user.username.toLowerCase() === args[0].toLowerCase());
     if (!member) {
-      member = members.find(val => val.nickname === args[0]);
+      member = members.find(val => val.nickname.toLowerCase() === args[0].toLowerCase());
     }
   } else {
     member = members.find(val => val.user.id === args[0]);
