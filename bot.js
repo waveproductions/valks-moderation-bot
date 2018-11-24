@@ -78,6 +78,8 @@ client.on('message', msg => {
     });
   }
 
+  if (msg.channel.type != 'text') return;
+  
   if (msg.content === msg.content.toUpperCase() && msg.content.length > 8) {
     msg.guild.channels.get("515687586732441610").send({
       embed: {
@@ -121,7 +123,6 @@ function warn(msg) {
   const args = msg.content.slice(tokens.prefix.length + 'warn'.length).trim().split(/ +/g);
   const reason = msg.content.split(' ').slice(2).join(' ');
   console.log(reason);
-  if (msg.channel.type != 'text') return;
   if (!msg.member.hasPermission('MANAGE_MESSAGES')) return msg.channel.send('No perms');
   if (args[0] == undefined) return msg.channel.send('Specify a member.');
   let member;
