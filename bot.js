@@ -33,8 +33,8 @@ client.on('guildBanAdd', (guild, user) => {
       description: reason ? reason : 'No reason specified.',
       timestamp: new Date(),
       footer: {
-        icon_url: msg.author.avatarURL,
-        text: msg.author.id
+        icon_url: user.avatarURL,
+        text: user.id
       }
     }
   });
