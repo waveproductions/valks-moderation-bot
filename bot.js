@@ -19,8 +19,41 @@ client.on('ready', () => {
   });
 });
 
+client.on('messageDelete', msg => {
+  client.channels.get("515687586732441610").send({
+    embed: {
+      author: {
+        name: `${msg.author.username} deleted a message.`
+      },
+      description: msg.content,
+      timestamp: new Date(),
+      footer: {
+        icon_url: msg.author.avatarURL,
+        text: msg.author.id
+      }
+    }
+  });
+});
+
 client.on('message', msg => {
   if (msg.author.bot) return; // We don't want the bot reacting to itself..
+
+  if (msg.channel.type != 'dm') {
+    msg.guild.channels.get("515687586732441610").send({
+      embed: {
+        color: 0xff96f6,
+        author: {
+          name: `${msg.author.username} sent a message through ${client.user.username} to staff.`
+        },
+        description: msg.content,
+        timestamp: new Date(),
+        footer: {
+          icon_url: msg.author.avatarURL,
+          text: msg.author.id
+        }
+      }
+    });
+  }
 
   if (msg.mentions.members.size == 0 && msg.mentions.roles.size == 0 && msg.content === msg.content.toUpperCase() && msg.content.length > 8) {
     msg.guild.channels.get("515687586732441610").send({
