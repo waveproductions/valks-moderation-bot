@@ -4,7 +4,7 @@ const tokens = require('./tokens.json');
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  
+
   client.channels.get("515687586732441610").send({
     embed: {
       color: 0xb1ff9e,
@@ -21,28 +21,27 @@ client.on('ready', () => {
 });
 
 client.on('presenceUpdate', (oldMember, newMember) => {
-		return;
-        if (newMember.presence.game === null) return;
-        var streaming = newMember.presence.game.streaming;
-        if (streaming === null) return;
-        if (streaming) {
-            oldMember.guild.channels.get("513256961656225792").send(`${newMember.user.username} is now streaming at ${newMember.presence.game.url}!`);
-        }
+  if (newMember.presence.game === null) return;
+  var streaming = newMember.presence.game.streaming;
+  if (streaming === null) return;
+  if (streaming) {
+    oldMember.guild.channels.get("513256961656225792").send(`${newMember.user.username} is now streaming at ${newMember.presence.game.url}!`);
+  }
 });
 
 client.on('guildMemberAdd', (member) => {
-	let role = member.guild.roles.find(val => val.name === 'a cat');
-	member.addRole(role);
-	
-	client.channels.get("513256961656225792").send({
+  let role = member.guild.roles.find(val => val.name === 'a cat');
+  member.addRole(role);
+
+  client.channels.get("513256961656225792").send({
     embed: {
       author: {
         name: `${member.user.username}`
       },
       color: 0xff96f6,
-	  thumbnail: {
-		url: member.user.avatarURL
-	  },
+      thumbnail: {
+        url: member.user.avatarURL
+      },
       description: 'Welcome!',
       timestamp: new Date(),
       footer: {
@@ -50,7 +49,9 @@ client.on('guildMemberAdd', (member) => {
         text: member.id
       }
     }
-  }).then(m => {m.delete(30000)});
+  }).then(m => {
+    m.delete(30000)
+  });
 });
 
 client.on('guildBanAdd', (guild, user) => {
@@ -93,7 +94,7 @@ client.on('messageDelete', msg => {
 });
 
 client.on('messageUpdate', (oldMessage, newMessage) => {
-	if (oldMessage.author.bot) return; // We don't want the bot reacting to itself..
+  if (oldMessage.author.bot) return; // We don't want the bot reacting to itself..
   if (oldMessage.member.hasPermission('MANAGE_MESSAGES')) return;
   client.channels.get("516030759493042179").send({
     embed: {
@@ -101,13 +102,14 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
         name: `${oldMessage.author.username} edited a message.`
       },
       fields: [{
-        name: "Old",
-        value: oldMessage
-      },
-      {
-        name: "New",
-        value: newMessage
-      }],
+          name: "Old",
+          value: oldMessage.content
+        },
+        {
+          name: "New",
+          value: newMessage.content
+        }
+      ],
       timestamp: new Date(),
       footer: {
         icon_url: oldMessage.author.avatarURL,
@@ -138,7 +140,7 @@ client.on('message', msg => {
   }
 
   if (msg.channel.type != 'text') return;
-  
+
   if (msg.content === msg.content.toUpperCase() && msg.content.length > 8) {
     msg.guild.channels.get("515687586732441610").send({
       embed: {
