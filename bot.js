@@ -12,6 +12,13 @@ const request = require('request');
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
+  client.user.setPresence({
+    game: {
+      name: 'valk.',
+      type: 'LISTENING'
+    },
+    status: 'online'
+  });
 
   client.channels.get("515687586732441610").send({
     embed: {
