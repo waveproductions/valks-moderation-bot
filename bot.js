@@ -35,7 +35,7 @@ client.on('presenceUpdate', (oldMember, newMember) => {
         thumbnail: {
           url: newMember.user.avatarURL
         },
-        description: `${newMember.presence.details}\n[Watch Stream](${newMember.presence.game.url})`,
+        description: `${newMember.presence.game.url}`,
         timestamp: new Date(),
         footer: {
           icon_url: newMember.user.avatarURL,
@@ -196,6 +196,11 @@ client.on('message', msg => {
 
   if (msg.content.startsWith(tokens.prefix + 'warn')) {
     warn(msg);
+  }
+
+  if (msg.content.startsWith(tokens.prefix + 'follow')) {
+    let followerRole = msg.guild.roles.find(val => val.name === 'Follower');
+    msg.member.addRole(followerRole);
   }
 });
 
