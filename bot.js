@@ -1,7 +1,13 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const tokens = require('./tokens.json');
-const secret = require('./secret.json');
+let secret;
+try {
+  secret = require('./secret.json');
+} catch (err) {
+  console.log('Secret not found. Ignoring..');
+}
+
 const request = require('request');
 
 client.on('ready', () => {
