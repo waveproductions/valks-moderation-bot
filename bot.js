@@ -266,6 +266,9 @@ function warn(msg) {
         name: `You were issued a warning!`
       },
       description: `${reason ? reason : 'No reason specified.'}`,
+	  thumbnail: {
+		  url: 'https://media1.tenor.com/images/31686440e805309d34e94219e4bedac1/tenor.gif?itemid=4790446'
+	  },
       timestamp: new Date(),
       footer: {
         icon_url: member.user.avatarURL,
