@@ -26,6 +26,47 @@ client.on('ready', () => {
       }
     }
   });
+
+  setInterval(function() {
+    request('http://javid.ddns.net/tModLoader/popularmods.php', function(error, response, body) {
+      let message = '';
+      let totalDownloads = 0;
+      let count = 0;
+      let lines = body.split('<br>');
+      lines.forEach(function(element) {
+        let name = element.split(' ');
+
+        name[name.length - 1] = name[name.length - 1].split('\t').shift();
+        name = name.join(' ');
+        let downloads = element.split(' ').pop().split('\t').pop();
+        let mods = ['Merchants+', 'Early Wings', 'Brighter Torches', 'Faster Tools', 'Faster Weapons', 'Plentiful Ores', 'Platform Helper', 'Endless Crafting', 'Campfire Buffs', '	First Try', 'Never Again', 'Realistic Blood', '[c/ff66ff:Sexy] [c/cc33ff:Purple] [c/ff66cc:Tooltips]', '[c/ff6666:No Expert Boss Health Scaling]', 'Torch Friend', 'Early Hardmode', 'Throwers Helper', 'No Oceans'];
+        mods.forEach(function(mod) {
+          if (name.includes(mod)) {
+            if (count >= 10) return;
+            message += `**${++count}.** ${name} (${downloads}) ${count == 1 ? ':star2:' : ''}\n`;
+            totalDownloads += parseInt(downloads);
+          }
+        });
+      });
+
+      client.guilds.get('453710350454620160').channels.get('516156219585724419').fetchMessage('516156378306445312').then(m => {
+        m.edit({
+          embed: {
+            color: 0xff96f6,
+            author: {
+              name: 'Valks Top 10 Mods (Updates in Realtime Every 10s)'
+            },
+            description: message,
+            timestamp: new Date(),
+            footer: {
+              icon_url: client.users.get('453640548985602048').avatarURL,
+              text: `Total Downloads (${totalDownloads})`
+            }
+          }
+        });
+      });
+    });
+  }, 10000);
 });
 
 client.on('presenceUpdate', (oldMember, newMember) => {
@@ -227,45 +268,6 @@ client.on('message', msg => {
       }
     }).then(m => {
       m.delete(30000);
-    });
-  }
-
-  if (msg.content.startsWith(tokens.prefix + 'top')) {
-    request('http://javid.ddns.net/tModLoader/popularmods.php', function(error, response, body) {
-      let message = '';
-      let totalDownloads = 0;
-      let count = 0;
-      let lines = body.split('<br>');
-      lines.forEach(function(element) {
-        let name = element.split(' ');
-
-        name[name.length - 1] = name[name.length - 1].split('\t').shift();
-        name = name.join(' ');
-        let downloads = element.split(' ').pop().split('\t').pop();
-        let mods = ['Merchants+', 'Early Wings', 'Brighter Torches', 'Faster Tools', 'Faster Weapons', 'Plentiful Ores', 'Platform Helper', 'Endless Crafting', 'Campfire Buffs', '	First Try', 'Never Again', 'Realistic Blood', '[c/ff66ff:Sexy] [c/cc33ff:Purple] [c/ff66cc:Tooltips]', '[c/ff6666:No Expert Boss Health Scaling]', 'Torch Friend', 'Early Hardmode', 'Throwers Helper', 'No Oceans'];
-        mods.forEach(function(mod) {
-          if (name.includes(mod)) {
-            if (count >= 10) return;
-            message += `**${++count}.** ${name} (${downloads}) ${count == 1 ? ':star2:' : ''}\n`;
-            totalDownloads += parseInt(downloads);
-          }
-        });
-      });
-
-      msg.channel.send({
-        embed: {
-          color: 0xff96f6,
-          author: {
-            name: 'Valks Top 10 Mods'
-          },
-          description: message,
-          timestamp: new Date(),
-          footer: {
-            icon_url: client.users.get('453640548985602048').avatarURL,
-            text: `Total Downloads (${totalDownloads})`
-          }
-        }
-      });
     });
   }
 });
