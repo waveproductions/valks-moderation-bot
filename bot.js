@@ -20,20 +20,26 @@ client.on('ready', () => {
   });
 });
 
-let valkStreaming;
-
 client.on('presenceUpdate', (oldMember, newMember) => {
   if (newMember.user.id != '453640548985602048') return;
   if (newMember.presence.game == null) return;
   let streaming = newMember.presence.game.streaming;
   if (streaming) {
-    valkStreaming = true;
-    newMember.guild.channels.get("514315299584081931").send(`${newMember.user.username} is now streaming at ${newMember.presence.game.url}`);
-  } else {
-    if (valkStreaming) {
-      valkStreaming = false;
-      newMember.guild.channels.get("514315299584081931").send(`Valk is no longer streaming.`);
-    }
+    let followerRole = newMember.guild.roles.find(val => val.name === 'Follower');
+    newMember.guild.channels.get("514315299584081931").send(followerRole.toString(), {
+      embed: {
+        author: {
+          name: `${newMember.user.username}'s is now streaming!`
+        },
+        color: 0x7632ff,
+        description: `[Watch Stream](${newMember.presence.game.url})`,
+        timestamp: new Date(),
+        footer: {
+          icon_url: newMember.user.avatarURL,
+          text: newMember.id
+        }
+      }
+    });
   }
 });
 
