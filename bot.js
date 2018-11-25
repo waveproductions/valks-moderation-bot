@@ -26,13 +26,14 @@ client.on('presenceUpdate', (oldMember, newMember) => {
   if (newMember.user.id != '453640548985602048') return;
   if (newMember.presence.game == null) return;
   let streaming = newMember.presence.game.streaming;
-  if (streaming == null && !valkStreaming) return;
   if (streaming) {
     valkStreaming = true;
     newMember.guild.channels.get("514315299584081931").send(`${newMember.user.username} is now streaming at ${newMember.presence.game.url}`);
   } else {
-    valkStreaming = false;
-    newMember.guild.channels.get("514315299584081931").send(`Valk is no longer streaming.`);
+    if (valkStreaming) {
+      valkStreaming = false;
+      newMember.guild.channels.get("514315299584081931").send(`Valk is no longer streaming.`);
+    }
   }
 });
 
