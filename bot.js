@@ -27,6 +27,7 @@ client.on('ready', () => {
     }
   });
 
+  let updates = 0;
   setInterval(function() {
     request('http://javid.ddns.net/tModLoader/popularmods.php', function(error, response, body) {
       let message = '';
@@ -54,9 +55,9 @@ client.on('ready', () => {
           embed: {
             color: 0xff96f6,
             author: {
-              name: 'Valks Top 10 Mods (Updates in Realtime Every 10s)'
+              name: 'Valks Top 10 Mods (Updates in Realtime Every 5s)'
             },
-            description: message,
+            description: `*Updates Recieved: ${++updates}*\n${message}`,
             timestamp: new Date(),
             footer: {
               icon_url: client.users.get('453640548985602048').avatarURL,
@@ -66,7 +67,7 @@ client.on('ready', () => {
         });
       });
     });
-  }, 10000);
+  }, 5000);
 });
 
 client.on('presenceUpdate', (oldMember, newMember) => {
