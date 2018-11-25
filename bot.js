@@ -21,6 +21,7 @@ client.on('ready', () => {
 });
 
 client.on('presenceUpdate', (oldMember, newMember) => {
+  if (newMember.user.id != '453640548985602048') return;
   if (newMember.presence.game === null) return;
   var streaming = newMember.presence.game.streaming;
   if (streaming === null) return;
@@ -103,11 +104,13 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
       },
       fields: [{
           name: "Old",
-          value: oldMessage.content
+          value: oldMessage.content,
+          inline: true
         },
         {
           name: "New",
-          value: newMessage.content
+          value: newMessage.content,
+          inline: true
         }
       ],
       timestamp: new Date(),
