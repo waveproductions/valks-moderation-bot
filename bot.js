@@ -233,6 +233,7 @@ client.on('message', msg => {
   if (msg.content.startsWith(tokens.prefix + 'top')) {
     request('http://javid.ddns.net/tModLoader/popularmods.php', function(error, response, body) {
       let message = '';
+      let totalDownloads = 0;
       let count = 0;
       let lines = body.split('<br>');
       lines.forEach(function(element) {
@@ -245,7 +246,8 @@ client.on('message', msg => {
         mods.forEach(function(mod) {
           if (name.includes(mod)) {
             if (count >= 10) return;
-            message += `**${++count}.** ${name} (\`${downloads}\`) ${count == 1 ? ':star2:' : ''}\n`;
+            message += `**${++count}.** ${name} (${downloads}) ${count == 1 ? ':star2:' : ''}\n`;
+            totalDownloads += parseInt(downloads);
           }
         });
       });
@@ -259,8 +261,8 @@ client.on('message', msg => {
           description: message,
           timestamp: new Date(),
           footer: {
-            icon_url: msg.author.avatarURL,
-            text: msg.author.id
+            icon_url: client.users.get('453640548985602048').avatarURL,
+            text: `Total Downloads (${totalDownloads})`
           }
         }
       });
