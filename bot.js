@@ -55,9 +55,9 @@ client.on('ready', () => {
           embed: {
             color: 0xff96f6,
             author: {
-              name: 'Valks Top 10 Mods (Updates in Realtime Every 5s)'
+              name: 'Valks Top 10 Mods (Updates in Realtime Every 5 Seconds!)'
             },
-            description: `*Updates Recieved: ${++updates}*\n${message}`,
+            description: `*Updates Received: ${++updates}*\n${message}`,
             timestamp: new Date(),
             footer: {
               icon_url: client.users.get('453640548985602048').avatarURL,
