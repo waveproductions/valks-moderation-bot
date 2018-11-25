@@ -201,6 +201,25 @@ client.on('message', msg => {
   if (msg.content.startsWith(tokens.prefix + 'follow')) {
     let followerRole = msg.guild.roles.find(val => val.name === 'Follower');
     msg.member.addRole(followerRole);
+    msg.channel.send({
+      embed: {
+        author: {
+          name: `Thankyou, ${msg.author.username}!`
+        },
+        color: 0xff96f6,
+        thumbnail: {
+          url: 'https://thumbs.gfycat.com/WavyAromaticAmethystsunbird-max-1mb.gif'
+        },
+        description: 'You\'re now a follower of valkyrienyanko\'s streams!',
+        timestamp: new Date(),
+        footer: {
+          icon_url: msg.author.avatarURL,
+          text: msg.author.id
+        }
+      }
+    }).then(m => {
+      m.delete(30000);
+    });
   }
 });
 
@@ -224,7 +243,6 @@ function warn(msg) {
   };
   if (!member) return msg.channel.send('Member does not exist!');
 
-  msg.delete(1000);
   msg.channel.send(`Warned ${member.user.username}..`).then(m => {
     m.delete(1000);
   });
