@@ -58,7 +58,7 @@ client.on('ready', () => {
           embed: {
             color: 0xff96f6,
             author: {
-              name: 'Valks Top 10 Mods (Updates in Realtime Every 10 Seconds!)'
+              name: 'Valks Top 10 Mods (Updates in Realtime Every Minute!)'
             },
             description: `${feedback ? ':small_orange_diamond:' : ':small_blue_diamond:'} \`Updates Received: ${++updates}\`\n${message}`,
             timestamp: new Date(),
@@ -70,7 +70,7 @@ client.on('ready', () => {
         });
       });
     });
-  }, 10000);
+  }, 60000);
 });
 
 client.on('presenceUpdate', (oldMember, newMember) => {
