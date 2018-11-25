@@ -9,6 +9,7 @@ try {
 }
 
 const request = require('request');
+const ffmpeg = require('ffmpeg');
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -19,6 +20,8 @@ client.on('ready', () => {
     },
     status: 'online'
   });
+  
+  client.channels.get('514656366301020160').join();
 
   client.channels.get("515687586732441610").send({
     embed: {
