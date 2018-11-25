@@ -31,12 +31,15 @@ client.on('presenceUpdate', (oldMember, newMember) => {
         author: {
           name: `${newMember.user.username}'s is now streaming!`
         },
-        color: 0x7632ff,
-        description: `[Watch Stream](${newMember.presence.game.url})`,
+        color: 0xff96f6,
+        thumbnail: {
+          url: newMember.user.avatarURL
+        },
+        description: `${newMember.presence.details}\n[Watch Stream](${newMember.presence.game.url})`,
         timestamp: new Date(),
         footer: {
           icon_url: newMember.user.avatarURL,
-          text: newMember.id
+          text: newMember.presence.game.name
         }
       }
     });
