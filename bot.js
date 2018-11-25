@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const tokens = require('./tokens.json');
+const secret = require('./secret.json');
+const request = require('request');
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -221,6 +223,43 @@ client.on('message', msg => {
       m.delete(30000);
     });
   }
+
+  if (msg.content.startsWith(tokens.prefix + 'top')) {
+    request('http://javid.ddns.net/tModLoader/popularmods.php', function(error, response, body) {
+      let message = '';
+      let count = 0;
+      let lines = body.split('<br>');
+      lines.forEach(function(element) {
+        let name = element.split(' ');
+
+        name[name.length - 1] = name[name.length - 1].split('\t').shift();
+        name = name.join(' ');
+        let downloads = element.split(' ').pop().split('\t').pop();
+        let mods = ['Merchants+', 'Early Wings', 'Brighter Torches', 'Faster Tools', 'Faster Weapons', 'Plentiful Ores', 'Platform Helper', 'Endless Crafting', 'Campfire Buffs', '	First Try', 'Never Again', 'Realistic Blood', '[c/ff66ff:Sexy] [c/cc33ff:Purple] [c/ff66cc:Tooltips]', '[c/ff6666:No Expert Boss Health Scaling]', 'Torch Friend', 'Early Hardmode', 'Throwers Helper', 'No Oceans'];
+        mods.forEach(function(mod) {
+          if (name.includes(mod)) {
+            if (count >= 10) return;
+            message += `**${++count}.** ${name} (\`${downloads}\`) ${count == 1 ? ':star2:' : ''}\n`;
+          }
+        });
+      });
+
+      msg.channel.send({
+        embed: {
+          color: 0xff96f6,
+          author: {
+            name: 'Valks Top 10 Mods'
+          },
+          description: message,
+          timestamp: new Date(),
+          footer: {
+            icon_url: msg.author.avatarURL,
+            text: msg.author.id
+          }
+        }
+      });
+    });
+  }
 });
 
 function warn(msg) {
@@ -266,9 +305,9 @@ function warn(msg) {
         name: `You were issued a warning!`
       },
       description: `${reason ? reason : 'No reason specified.'}`,
-	  image: {
-		  url: 'https://media1.tenor.com/images/31686440e805309d34e94219e4bedac1/tenor.gif?itemid=4790446'
-	  },
+      image: {
+        url: 'https://media1.tenor.com/images/31686440e805309d34e94219e4bedac1/tenor.gif?itemid=4790446'
+      },
       timestamp: new Date(),
       footer: {
         icon_url: member.user.avatarURL,
@@ -278,4 +317,4 @@ function warn(msg) {
   });
 }
 
-client.login(process.env.BOT_TOKEN);
+client.login(process.env.BOT_TOKEN || secret.token);
