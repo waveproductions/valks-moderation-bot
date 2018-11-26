@@ -9,13 +9,6 @@ try {
 }
 
 const request = require('request');
-const ffmpeg = require('ffmpeg');
-let ytdl;
-try {
-  ytdl = require('ytdl-core');
-} catch (err) {
-  console.log('ytdl-core not found. Ignoring..');
-}
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -72,7 +65,7 @@ client.on('ready', () => {
           embed: {
             color: 0xff96f6,
             author: {
-              name: 'Valks Top 10 Mods (Updates in Realtime Every Minute!)'
+              name: 'Valks Top 10 Mods (Updates in Realtime Every Hour!)'
             },
             description: `${feedback ? ':small_orange_diamond:' : ':small_blue_diamond:'} \`Updates Received: ${++updates}\`\n${message}`,
             timestamp: new Date(),
