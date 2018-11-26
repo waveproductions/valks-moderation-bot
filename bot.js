@@ -81,6 +81,7 @@ client.on('ready', () => {
 });
 
 client.on('presenceUpdate', (oldMember, newMember) => {
+	return;
   if (newMember.user.id != '453640548985602048') return;
   if (newMember.presence.game == null) return;
   let streaming = newMember.presence.game.streaming;
