@@ -10,6 +10,12 @@ try {
 
 const request = require('request');
 const ffmpeg = require('ffmpeg');
+let ytdl;
+try {
+  ytdl = require('ytdl-core');
+} catch (err) {
+  console.log('ytdl-core not found. Ignoring..');
+}
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
@@ -20,8 +26,17 @@ client.on('ready', () => {
     },
     status: 'online'
   });
-  
-  client.channels.get('514656366301020160').join();
+
+  const streamOptions = {
+    seek: 0,
+    volume: 1
+  };
+  client.channels.get('514656366301020160').join().then(connection => {
+    const stream = ytdl('https://www.youtube.com/watch?v=iQ7hdZZw7aE', {
+      filter: 'audioonly'
+    });
+    const dispatcher = connection.playStream(stream, streamOptions);
+  });
 
   client.channels.get("515687586732441610").send({
     embed: {
