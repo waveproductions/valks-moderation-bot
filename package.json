@@ -15,7 +15,10 @@
     "discord.js": "^11.4.2",
     "ffmpeg": "0.0.4",
     "opusscript": "0.0.6",
+    "random-anime-wallpapers": "^1.1.0",
     "request": "^2.88.0",
+    "youtube-playlist-info": "^1.1.2",
+    "youtube-search": "^1.1.3",
     "ytdl-core": "^0.28.0"
   }
 }
