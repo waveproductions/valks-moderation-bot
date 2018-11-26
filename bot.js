@@ -9,7 +9,6 @@ try {
 }
 
 const request = require('request');
-const ffmpeg = require('ffmpeg');
 let ytdl;
 try {
   ytdl = require('ytdl-core');
